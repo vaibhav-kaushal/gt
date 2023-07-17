@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
 
+if [[ $# -eq 0 ]]; then
+  return
+fi
+
 # We handle the help case here to make sure that other checks work as expected
 pr default "This tool is a helper for git shortcuts\n"
 pr default "Usage: "
