@@ -15,28 +15,28 @@ cpb)
 
 	case $2 in
 	help)
-		pr default "Usage:"
-		pr default "${0} $1 commit_message"
-		pr default "commit_message is required and it cannot be 'help'"
+		clpr default "Usage:"
+		clpr default "${0} $1 commit_message"
+		clpr default "commit_message is required and it cannot be 'help'"
 		;;
 	*)
 		if [[ -z "$2" ]]; then
-			pr red "No commit message supplied"
-			pr red "Exiting!"
+			clpr red "No commit message supplied"
+			clpr red "Exiting!"
 			return 3
 		fi
 
-		pr --no-newline default "About to commit with the email address: "
-		pr red $(git config --global user.email)
+		clpr --no-newline default "About to commit with the email address: "
+		clpr red $(git config --global user.email)
 
 		read -k1 "choice?Continue? [y/n] "
 
 		if [[ $choice = "y" || $choice = "Y" ]]; then
 			echo ""
-			pr blue "continuing..."
+			clpr blue "continuing..."
 		else
 			echo ""
-			pr blue "Aborted!"
+			clpr blue "Aborted!"
 			return 6
 		fi
 
@@ -44,11 +44,11 @@ cpb)
 		shift
 
 		git add .
-		pr blue '======)> Added!'
+		clpr blue '======)> Added!'
 		git commit -m "$(gitbranch) $*"
-		pr blue '======)> Commited'
+		clpr blue '======)> Commited'
 		git push origin $(gitbranch)
-		pr blue '======)> Pushed'
+		clpr blue '======)> Pushed'
 		;;
 	esac
 	;;
@@ -60,28 +60,28 @@ cp)
 
 	case $2 in
 	help)
-		pr default "Usage:"
-		pr default "${0} $1 commit_message"
-		pr default "commit_message is required and it cannot be 'help'"
+		clpr default "Usage:"
+		clpr default "${0} $1 commit_message"
+		clpr default "commit_message is required and it cannot be 'help'"
 		;;
 	*)
 		if [[ -z "$2" ]]; then
-			pr red "No commit message supplied"
-			pr red "Exiting!"
+			clpr red "No commit message supplied"
+			clpr red "Exiting!"
 			return 3
 		fi
 
-		pr --no-newline default "About to commit with the email address: "
-		pr red $(git config --global user.email)
+		clpr --no-newline default "About to commit with the email address: "
+		clpr red $(git config --global user.email)
 
 		read -k1 "choice?Continue? [y/n] "
 
 		if [[ $choice = "y" || $choice = "Y" ]]; then
 			echo ""
-			pr blue "continuing..."
+			clpr blue "continuing..."
 		else
 			echo ""
-			pr blue "Aborted!"
+			clpr blue "Aborted!"
 			return 6
 		fi
 
@@ -89,36 +89,36 @@ cp)
 		shift
 
 		git add .
-		pr blue '======)> Added!'
+		clpr blue '======)> Added!'
 		git commit -m "$*"
-		pr blue '======)> Commited'
+		clpr blue '======)> Commited'
 		git push origin $(gitbranch)
-		pr blue '======)> Pushed'
+		clpr blue '======)> Pushed'
 		;;
 	esac
 	;;
 # Switch Keys
 sk)
-	pr default "Switching GitHub SSH keys (and email)"
-	pr magenta "Current Email: $(gt s email)"
+	clpr default "Switching GitHub SSH keys (and email)"
+	clpr magenta "Current Email: $(gt s email)"
 
 	case $2 in
 	w | work)
 		sed -i -e 's/id_rsa_personal/id_rsa_work/' ~/.ssh/config
 		git config --global user.email vaibhav@plackal.in
-		pr green "After swithing: $(gt s email)"
+		clpr green "After swithing: $(gt s email)"
 		;;
 	p | personal)
 		sed -i -e 's/id_rsa_work/id_rsa_personal/' ~/.ssh/config
 		git config --global user.email vaibhavkaushal123@gmail.com
-		pr green "After swithing: $(gt s email)"
+		clpr green "After swithing: $(gt s email)"
 		;;
 	help | *)
-		pr default "Usage:"
-		pr default "${0} $1 key_type"
-		pr default "key_type is required and it cannot be 'help'. It can be one of:"
-		pr default "  w (work): Sets the ssh key for work"
-		pr default "  p (personal): Sets the personal key"
+		clpr default "Usage:"
+		clpr default "${0} $1 key_type"
+		clpr default "key_type is required and it cannot be 'help'. It can be one of:"
+		clpr default "  w (work): Sets the ssh key for work"
+		clpr default "  p (personal): Sets the personal key"
 		;;
 	esac
 	;;
@@ -126,17 +126,17 @@ sk)
 s)
 	case $2 in
 	e | email)
-		pr default "git config --global user.email: $(git config --global user.email)"
+		clpr default "git config --global user.email: $(git config --global user.email)"
 		;;
 	n | name)
-		pr default "git config --global user.name: $(git config --global user.name)"
+		clpr default "git config --global user.name: $(git config --global user.name)"
 		;;
 	help | *)
-		pr default "Usage:"
-		pr default "${0} $1 what_to_show"
-		pr default "what_to_show is required and can be:"
-		pr default "  e (email): Shows the user email"
-		pr default "  n (name): Shows the user name"
+		clpr default "Usage:"
+		clpr default "${0} $1 what_to_show"
+		clpr default "what_to_show is required and can be:"
+		clpr default "  e (email): Shows the user email"
+		clpr default "  n (name): Shows the user name"
 		;;
 	esac
 	;;
@@ -164,7 +164,7 @@ ogh)
 			;;
 		esac
 		;;
-	pr | pull-requests)
+	clpr | pull-requests)
 		url="$url/pulls"
 		case $3 in
 		new | n)
@@ -184,17 +184,17 @@ ogh)
 		url="$url/settings"
 		;;
 	help)
-		pr default "'${funcstack[1]} ogh' opens the GitHub (only GitHub) link of a repo in browser (Firefox)"
-		pr default "Usage: "
-		pr default "${funcstack[1]} ogh option [param]"
-		pr default "Where option can be:"
-		pr default "  i (issue|issues)  : Opens the issue page for this repo. Can take following param:"
-		pr green "      n|new): Opens the 'New Issue' page"
-		pr default "  pr (pull-requests): Opens the pull requests page for this repo. Can take following params:"
-		pr green "      n|new): Opens the 'New Pull Request' page"
-		pr default "  proj (projects)   : Opens the Projects page for this repo. Does not take any param."
-		pr default "  w (wiki)          : Opens the Wiki page for this repo. Does not take any param."
-		pr default "  s (settings)      : Opens the Settings page for this repo. Does not take any param."
+		clpr default "'${funcstack[1]} ogh' opens the GitHub (only GitHub) link of a repo in browser (Firefox)"
+		clpr default "Usage: "
+		clpr default "${funcstack[1]} ogh option [param]"
+		clpr default "Where option can be:"
+		clpr default "  i (issue|issues)  : Opens the issue page for this repo. Can take following param:"
+		clpr green "      n|new): Opens the 'New Issue' page"
+		clpr default "  clpr (pull-requests): Opens the pull requests page for this repo. Can take following params:"
+		clpr green "      n|new): Opens the 'New Pull Request' page"
+		clpr default "  proj (projects)   : Opens the Projects page for this repo. Does not take any param."
+		clpr default "  w (wiki)          : Opens the Wiki page for this repo. Does not take any param."
+		clpr default "  s (settings)      : Opens the Settings page for this repo. Does not take any param."
 		return 1
 		;;
 	*) ;;
