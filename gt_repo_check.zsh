@@ -1,4 +1,4 @@
-!/usr/bin/env zsh
+#!/usr/bin/env zsh
 
 git status >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
